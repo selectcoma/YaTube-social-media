@@ -42,13 +42,13 @@ UNFOLLOW_URL = reverse("profile_unfollow",
                            "username": USERNAME_2
                        })
 FOLLOW_INDEX_URL_USER_1 = reverse("follow_index",
-                           kwargs={
-                               "username": USERNAME
-                           })
+                                  kwargs={
+                                      "username": USERNAME
+                                  })
 FOLLOW_INDEX_URL_USER_3 = reverse("follow_index",
-                           kwargs={
-                               "username": USERNAME_3
-                           })
+                                  kwargs={
+                                      "username": USERNAME_3
+                                  })
 SECOND_PAGE_SLUG = "?page=2"
 TEST_GROUP_NAME = "test_group"
 TEST_GROUP_NAME_2 = "test_group"
@@ -261,7 +261,7 @@ class PostsPagesTests(TestCase):
             "text": "test comment"
         }
         comment_count_initial = Comment.objects.all().count()
-        response_1 = self.authorized_client.post(
+        self.authorized_client.post(
             reverse(ADD_COMMENT_URL_NAME,
                     kwargs={
                         "username": USERNAME,
@@ -272,7 +272,7 @@ class PostsPagesTests(TestCase):
         )
         comment_count_2 = Comment.objects.all().count()
 
-        response_2 = self.guest_client.post(
+        self.guest_client.post(
             reverse(ADD_COMMENT_URL_NAME,
                     kwargs={
                         "username": USERNAME,
@@ -284,12 +284,6 @@ class PostsPagesTests(TestCase):
         comment_count_3 = Comment.objects.all().count()
         self.assertEqual(comment_count_2, comment_count_initial + 1)
         self.assertEqual(comment_count_3, comment_count_2)
-
-
-
-
-
-
 
 
 class PaginatorViewsTest(TestCase):
@@ -321,8 +315,3 @@ class PaginatorViewsTest(TestCase):
         response = self.client.get(reverse(HOMEPAGE_NAME) + SECOND_PAGE_SLUG)
         posts_on_page = len(response.context["page"])
         self.assertEqual(posts_on_page, 3)
-
-
-
-
-

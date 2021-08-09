@@ -140,4 +140,3 @@ class PostFormTest(TestCase):
         image = self.post_with_img.image
         image_in_database = Post.objects.last().image
         self.assertEqual(image_in_database, image)
-
