@@ -41,14 +41,7 @@ UNFOLLOW_URL = reverse("profile_unfollow",
                        kwargs={
                            "username": USERNAME_2
                        })
-FOLLOW_INDEX_URL_USER_1 = reverse("follow_index",
-                                  kwargs={
-                                      "username": USERNAME
-                                  })
-FOLLOW_INDEX_URL_USER_3 = reverse("follow_index",
-                                  kwargs={
-                                      "username": USERNAME_3
-                                  })
+FOLLOW_INDEX = reverse("follow_index")
 SECOND_PAGE_SLUG = "?page=2"
 TEST_GROUP_NAME = "test_group"
 TEST_GROUP_NAME_2 = "test_group"
@@ -224,13 +217,13 @@ class PostsPagesTests(TestCase):
         """Test if the follow functionality works correctly"""
         self.authorized_client.get(FOLLOW_URL)
         self.assertTrue(Follow.objects.filter(
-            follower=self.user,
-            following=self.user_2
+            user=self.user,
+            author=self.user_2
         ))
         self.authorized_client.get(UNFOLLOW_URL)
         self.assertFalse(Follow.objects.filter(
-            follower=self.user,
-            following=self.user_2
+            user=self.user,
+            author=self.user_2
         ))
 
     def test_new_post_appears_on_follow_page(self):
@@ -244,12 +237,12 @@ class PostsPagesTests(TestCase):
             author=self.user_2
         )
         response_user1 = self.authorized_client.get(
-            FOLLOW_INDEX_URL_USER_1
+            FOLLOW_INDEX
         )
         user1_follow_page_post = response_user1.context["page"][0]
         self.authorized_client.force_login(self.user_3)
         response_user3 = self.authorized_client.get(
-            FOLLOW_INDEX_URL_USER_3
+            FOLLOW_INDEX
         )
         self.assertFalse(response_user3.context["page"])
         self.assertEqual(new_post, user1_follow_page_post)

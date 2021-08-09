@@ -34,7 +34,7 @@ def group_posts(request, slug):
     page = paginator.get_page(page_number)
     context = {
         "group": group,
-        "page": page
+        "page": page,
     }
     return render(
         request, "posts/group.html", context
@@ -48,19 +48,22 @@ def profile(request, username):
     page_number = request.GET.get("page")
     page = paginator.get_page(page_number)
     posts_count = author.posts.count()
-    if Follow.objects.filter(
-            follower=request.user,
-            following=author):
-        following = True
-    else:
-        following = False
+    following = False
+    if request.user.is_authenticated:
+        if Follow.objects.filter(
+                user=request.user,
+                author=author):
+            following = True
+        else:
+            following = False
     context = {
         "user": request.user,
         "following": following,
         "author": author,
         "page": page,
         "posts": posts,
-        "posts_count": posts_count
+        "posts_count": posts_count,
+        "paginator": paginator
     }
     return render(
         request, "posts/profile.html", context
@@ -73,7 +76,7 @@ def post_view(request, username, post_id):
                              author=author,
                              pk=post_id)
     posts_count = author.posts.count()
-    form = CommentForm
+    form = CommentForm()
     comments = post.comments.all()
     context = {
         "author": author,
@@ -116,12 +119,14 @@ def post_edit(request, username, post_id):
     if request.user != profile:
         return redirect('post', username=username, post_id=post_id)
 
-    form = PostForm(request.POST or None, files=request.FILES or None, instance=post)
+    form = PostForm(request.POST or None,
+                    files=request.FILES or None, instance=post)
 
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return redirect("post", username=request.user.username, post_id=post_id)
+            return redirect("post", username=request.user.username,
+                            post_id=post_id)
 
     return render(
         request, 'posts/post_edit.html', {'form': form, 'post': post},
@@ -156,25 +161,27 @@ def add_comment(request, username, post_id):
 @login_required
 def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
-    if request.user != author:
-        Follow.objects.get_or_create(following=author, follower=request.user)
-    return redirect("profile", username)
+    if request.user.is_authenticated:
+        if request.user != author:
+            Follow.objects.get_or_create(author=author, user=request.user)
+        return redirect("profile", username)
+    return redirect("auth/login/")
 
 
 @login_required
 def profile_unfollow(request, username):
     Follow.objects.filter(
-        following__username=username,
-        follower=request.user).delete()
+        author__username=username,
+        user=request.user).delete()
     return redirect("profile", username)
 
 
 @login_required
-def follow_index(request, username):
+def follow_index(request):
     follows = Follow.objects.filter(
-        follower=request.user
+        user=request.user
     )
-    authors = [follow.following
+    authors = [follow.author
                for follow in follows]
     posts = Post.objects.filter(
         author__in=authors
@@ -192,3 +199,4 @@ def follow_index(request, username):
             "page": page,
         }
     )
+

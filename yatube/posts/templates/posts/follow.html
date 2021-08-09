@@ -10,14 +10,11 @@
                     {% include "posts/post_item.html" with post=post %}
                 {% endfor %}
             {% if page.has_other_pages %}
-                {% include "includes/paginator.html" with items=page paginator=paginator%}
+                {% include "includes/paginator.html" %}
             {% endif %}
             {% else %}
             <p class="text-muted">You don't follow anyone yet</p>
-
-
             {% endif %}
-
         </div>
     </main>
 {% endblock %}

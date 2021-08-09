@@ -41,7 +41,7 @@ class PostUrlTest(TestCase):
         """
         self.guest_client = Client()
         self.authorized_client = Client()
-        self.user = PostUrlTest.user
+        self.user = self.user
         self.authorized_client.force_login(self.user)
 
     def test_home_url_exists_at_desired_location(self):
