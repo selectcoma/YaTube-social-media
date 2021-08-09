@@ -201,4 +201,3 @@ def follow_index(request):
             "page": page,
         }
     )
-
