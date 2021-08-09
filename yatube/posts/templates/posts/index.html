@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}News on site{% endblock %}
+{% block header %}News on site{% endblock %}
+{% block content %}
+  <div class="container">
+
+    {% include "posts/includes/menu.html" with index=True %}
+
+    {% for post in page %}
+      {% include "posts/post_item.html" with post=post %}
+    {% endfor %}
+
+    {% include "includes/paginator.html" with items=page paginator=paginator %}
+
+  </div>
+{% endblock %}

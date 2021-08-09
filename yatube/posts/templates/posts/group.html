@@ -1,0 +1,23 @@
+
+{% extends "base.html" %} 
+{% block title %} Group posts {{ group.title }} {% endblock %}
+{% block header %} Group posts {{ group.title }} {% endblock %}
+{% block content %} 
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+
+  <title>Записи сообщества {{ group.title }} | Yatube</title>
+
+    <h1> {{ group.title }} </h1>
+    <p>
+        {{ group.description|linebreaksbr }}
+    </p>
+{% for post in page %}
+  {% include "posts/post_item.html" %}
+
+{% endfor %}
+{% include "includes/paginator.html" %}
+{% endblock %}

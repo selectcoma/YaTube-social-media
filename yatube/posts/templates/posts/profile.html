@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block header %} Posts by {{ author.username }}{% endblock %}
+{% block content %}
+    <main role="main" class="container">
+        <div class="row">
+            {% include "posts/includes/author_info.html" with author=author%}
+            <div class="col-md-8">
+                {% for post in page %}
+                    {% include "posts/post_item.html" with post=post %}
+                {% endfor %}
+                {% if page.has_other_pages %}
+                    {% include "includes/paginator.html" with items=page paginator=paginator%}
+                {% endif %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

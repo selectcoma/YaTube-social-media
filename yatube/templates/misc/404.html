@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Error 404{% endblock %}
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Error 404</h1>
+      <p class="lead">The page <code>{{ path }}</code> was not found</p>
+      <p class="lead"><a href="{% url 'index' %}">Back to homepage</a></p>
+    </div>
+  </div>
+
+{% endblock %} 
