@@ -148,7 +148,8 @@ def server_error(request):
 
 @login_required
 def add_comment(request, username, post_id):
-    post = get_object_or_404(Post, author__username=username, pk=post_id)
+    post = get_object_or_404(Post, author__username=username,
+                             pk=post_id)
     comment_form = CommentForm(request.POST or None)
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
@@ -163,7 +164,8 @@ def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
     if request.user.is_authenticated:
         if request.user != author:
-            Follow.objects.get_or_create(author=author, user=request.user)
+            Follow.objects.get_or_create(author=author,
+                                         user=request.user)
         return redirect("profile", username)
     return redirect("auth/login/")
 
