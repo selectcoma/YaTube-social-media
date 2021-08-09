@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Favourite author posts{% endblock %}
+{% block header %}Favourite author posts{% endblock %}
+{% block content %}
+    <main role="main" class="container">
+        {% include "posts/includes/menu.html" with follow=True %}
+        <div class="col-md-9">
+            {% if posts %}
+                {% for post in page %}
+                    {% include "posts/post_item.html" with post=post %}
+                {% endfor %}
+            {% if page.has_other_pages %}
+                {% include "includes/paginator.html" with items=page paginator=paginator%}
+            {% endif %}
+            {% else %}
+            <p class="text-muted">You don't follow anyone yet</p>
+
+
+            {% endif %}
+
+        </div>
+    </main>
+{% endblock %}
