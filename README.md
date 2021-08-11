@@ -9,3 +9,4 @@ Here are its main functionalities:
 - Get the latest posts of all the users on the main feed
 - Read the latest posts of all the users you follow on a separate feed
 - Creating thematic groups and posting on them
+
