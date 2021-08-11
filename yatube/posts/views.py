@@ -47,7 +47,6 @@ def profile(request, username):
     paginator = Paginator(posts, POSTS_ON_PAGE)
     page_number = request.GET.get("page")
     page = paginator.get_page(page_number)
-    posts_count = author.posts.count()
     following = False
     if request.user.is_authenticated:
         if Follow.objects.filter(
@@ -61,9 +60,6 @@ def profile(request, username):
         "following": following,
         "author": author,
         "page": page,
-        "posts": posts,
-        "posts_count": posts_count,
-        "paginator": paginator
     }
     return render(
         request, "posts/profile.html", context
@@ -71,7 +67,7 @@ def profile(request, username):
 
 
 def post_view(request, username, post_id):
-    author = User.objects.get(username=username)
+    author = get_object_or_404(User, username=username)
     post = get_object_or_404(Post,
                              author=author,
                              pk=post_id)
@@ -196,8 +192,6 @@ def follow_index(request):
         request,
         template,
         {
-            "posts": posts,
-            "paginator": paginator,
             "page": page,
         }
     )

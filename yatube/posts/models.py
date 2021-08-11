@@ -66,12 +66,12 @@ class Comment(models.Model):
                                    verbose_name="Comment_date")
 
     class Meta:
-        ordering = ["-created"]
+        ordering = ("-created",)
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
 
     def __str__(self):
-        return self.text
+        return self.text[:15]
 
 
 class Follow(models.Model):
@@ -85,3 +85,10 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name="following"
     )
+
+    class Meta:
+        verbose_name = "Follow"
+        verbose_name_plural = "Follows"
+
+    def __str__(self):
+        return f"{self.user} following {self.author}"
