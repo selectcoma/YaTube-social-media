@@ -1,7 +1,6 @@
 from django.test import Client, TestCase
 from django.urls import reverse
 
-
 AUTHOR_TEMPLATE = "about/author.html"
 AUTHOR_URL = reverse("about:author")
 TECH_TEMPLATE = "about/tech.html"

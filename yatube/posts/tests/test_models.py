@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from posts.models import Group, Post, User, Comment, Follow
+from posts.models import Comment, Follow, Group, Post, User
 
 USERNAME = "test_user"
 TEST_GROUP_SLUG = "test_group"

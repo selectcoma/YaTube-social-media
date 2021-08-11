@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Зарегистрироваться{% endblock %}
+{% block title %}Sign up{% endblock %}
+{% block header %} Sign up {% endblock %}
 {% block content %}
 
   {% load user_filters %}
@@ -7,7 +8,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8 p-5">
       <div class="card">
-        <div class="card-header">Зарегистрироваться</div>
+        <div class="card-header">Sign up</div>
         <div class="card-body">
 
           {% for error in form.errors %}
@@ -43,13 +44,13 @@
 
             <div class="col-md-6 offset-md-4">
               <button type="submit" class="btn btn-primary">
-                Зарегистрироваться
+                Sign up
               </button>
             </div>
           </form>
-        </div> <!-- card body -->
-      </div> <!-- card -->
-    </div> <!-- col -->
-  </div> <!-- row -->
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
