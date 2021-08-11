@@ -94,5 +94,3 @@ class FollowModelTest(TestCase):
         string = follow.__str__()
         expected_string = f"{self.user} following {self.user_2}"
         self.assertEqual(string, expected_string)
-
-
